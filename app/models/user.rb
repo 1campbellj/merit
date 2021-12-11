@@ -8,6 +8,8 @@ class User < ApplicationRecord
   belongs_to :goal
 
   validates :first_name, :last_name, :email, :phone_number, presence: true, if: :contact_or_after?
+  validate :email_format, if: :contact_or_after?
+  validate :phone_format, if: :contact_or_after?
 
   def contact_or_after?
     User.statuses[status] >= User.statuses[:contact]
@@ -19,6 +21,18 @@ class User < ApplicationRecord
 
   def complete?
     status == 'complete'
+  end
+
+  def email_format
+    if !email.match(/\A.+@.+\..+/)
+      errors.add(:email, 'must be a valid email signature')
+    end
+  end
+
+  def phone_format
+    if phone_number.length != 10 || !phone_number.match(/\A\d+\z/)
+      errors.add(:phone_number, 'must be 10 numbers and no other characters')
+    end
   end
 
 end
