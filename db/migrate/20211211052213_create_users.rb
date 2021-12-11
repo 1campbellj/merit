@@ -7,6 +7,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :email
       t.string :education
       t.integer :graduation_year
+      t.references :goal
+      t.integer :status
 
       t.timestamps
     end
