@@ -1,0 +1,43 @@
+
+<div class="mx-auto md:w-2/3 w-full">
+  <%= form_with(model: @user, class: "contents", method: 'put', url: user_path) do |form| %>
+    <% if @user.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+          <% @user.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form.text_field :status, value: 'complete', hidden: true %>
+
+    <%= form.fields_for 'graduation_attributes' do |graduation_form| %>
+      <% if @user.graduation %>
+        <%# for updating existing %>
+        <%= graduation_form.number_field :id, value: @user.graduation.id, hidden: true %>
+      <% end %>
+      <div class='my-5'>
+        <%= graduation_form.collection_radio_buttons :degree_id, @degrees, :id, :name, class: 'my-5', checked: @user.graduation.try(:degree_id) do |b| %>
+          <label>
+            <%= b.radio_button class: 'hidden peer'%>
+            <div class="peer-checked:bg-red-600"><%= b.text %></div>
+          </label>
+        <% end %>
+      </div>
+      <div class='my-5'>
+        <%= graduation_form.label :year, 'What year did you graduate?', required: true %>
+        <%= graduation_form.number_field :year, value: @user.graduation.try(:year) %> 
+      </div>
+    <% end %>
+
+    <div class="flex justify-between">
+      <%= link_to 'Previous', contact_user_path(@user), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= form.submit "Next", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>
+
+</div>
