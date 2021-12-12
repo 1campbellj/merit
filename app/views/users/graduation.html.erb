@@ -1,5 +1,7 @@
-
 <div class="mx-auto md:w-2/3 w-full">
+
+  <%= render 'progress', steps: 3, step_title: 'EDUCATION', current_step: 3 %>
+
   <%= form_with(model: @user, class: "contents", method: 'put', url: user_path) do |form| %>
     <% if @user.errors.any? %>
       <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">

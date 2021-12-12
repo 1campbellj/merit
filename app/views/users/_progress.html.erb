@@ -1,0 +1,17 @@
+<div class="progress mb-5">
+  <div class="text-center text-xs mb-1 text-gray-400"><%= step_title %></div>
+    
+  <div class="bars flex w-full">
+    <% steps.times do |s| %>
+      <div class="flex-grow self-center">     
+        <div class="relative">
+          <div class="bar overflow-hidden h-1 flex bg-gray-200 <%= s < current_step ? 'filled' : '' %>"></div>
+        </div>
+      </div>
+      <% if s != steps-1 %>
+        <div class='bar-divider mx-2 bg-slate-400'></div>
+      <% end %>
+    <% end %>
+
+  </div>
+</div>

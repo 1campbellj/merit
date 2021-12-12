@@ -1,31 +1,33 @@
-  <%= form_with(model: @user, class: "contents", method: user.persisted? ? 'put' : 'post', url: user.persisted? ? user_path : users_path) do |form| %>
-    <% if @user.errors.any? %>
-      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= render 'progress', steps: 3, step_title: 'GOALS', current_step: 1 %>
 
-        <ul>
-          <% @user.errors.each do |error| %>
-            <li><%= error.full_message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
+<%= form_with(model: @user, class: "contents", method: user.persisted? ? 'put' : 'post', url: user.persisted? ? user_path : users_path) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-    <%= form.text_field :status, value: 'contact', hidden: true %>
-    <div class='text-lg'>
-      What is your primary goal?
-    </div>
-  <div class='my-2 flex flex-row flex-wrap'>
-    <%= form.collection_radio_buttons :goal_id, @goals, :id, :text, class: 'my-5', check: @user.goal_id do |g| %>
-      <label class="flex-grow">
-        <%= g.radio_button class: 'hidden peer'%>
-        <div class="w-full py-2 px-5 mb-2 mr-2 whitespace-nowrap rounded-md bg-gray-200 inline-block peer-checked:bg-gray-600 peer-checked:text-white"><%= g.text %></div>
-      </label>
-    <% end %>
-  </div>
-    <div class="flex justify-end">
-      <%= form.submit "Next", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
+
+  <%= form.text_field :status, value: 'contact', hidden: true %>
+  <div class='text-lg'>
+    What is your primary goal?
+  </div>
+<div class='my-2 flex flex-row flex-wrap'>
+  <%= form.collection_radio_buttons :goal_id, @goals, :id, :text, class: 'my-5', check: @user.goal_id do |g| %>
+    <label class="flex-grow">
+      <%= g.radio_button class: 'hidden peer'%>
+      <div class="w-full py-2 px-5 mb-2 mr-2 whitespace-nowrap rounded-md bg-gray-200 inline-block peer-checked:bg-gray-600 peer-checked:text-white"><%= g.text %></div>
+    </label>
+  <% end %>
+</div>
+  <div class="flex justify-end">
+    <%= form.submit "Next", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
 
 

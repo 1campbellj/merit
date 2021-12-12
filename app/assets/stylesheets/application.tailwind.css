@@ -9,3 +9,13 @@ label.required:after {
 main.container {
   max-width: 500px;
 }
+
+.bar-divider {
+  height: 7px;
+  width: 7px;
+  transform: rotate(45deg);
+}
+
+.bar.filled {
+  @apply bg-gray-500;
+}
