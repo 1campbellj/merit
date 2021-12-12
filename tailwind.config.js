@@ -7,7 +7,8 @@ module.exports = {
   ],
   variants: {
     extend: {
-      backgroundColor: ['checked']
+      backgroundColor: ['checked'],
+      textColor: ['checked']
     }
   }
 }

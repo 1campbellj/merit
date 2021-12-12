@@ -15,27 +15,30 @@
 
     <%= form.text_field :status, value: 'complete', hidden: true %>
 
+    <div class='text-lg'>
+      Highest level of education
+    </div>
     <%= form.fields_for 'graduation_attributes' do |graduation_form| %>
       <% if @user.graduation %>
         <%# for updating existing %>
         <%= graduation_form.number_field :id, value: @user.graduation.id, hidden: true %>
       <% end %>
-      <div class='my-5'>
+      <div class="my-2">
         <%= graduation_form.collection_radio_buttons :degree_id, @degrees, :id, :name, class: 'my-5', checked: @user.graduation.try(:degree_id) do |b| %>
           <label>
             <%= b.radio_button class: 'hidden peer'%>
-            <div class="peer-checked:bg-red-600"><%= b.text %></div>
+            <div class="w-full py-2 px-5 mb-2 mr-2 whitespace-nowrap rounded-md bg-gray-200 inline-block peer-checked:bg-gray-600 peer-checked:text-white"><%= b.text %></div>
           </label>
         <% end %>
       </div>
       <div class='my-5'>
-        <%= graduation_form.label :year, 'What year did you graduate?', required: true %>
-        <%= graduation_form.number_field :year, value: @user.graduation.try(:year) %> 
+        <%= graduation_form.label :year, 'What year did you graduate?', class: 'text-lg', required: true %>
+        <%= graduation_form.number_field :year, class: 'block rounded-md bg-gray-200 outline-none px-3 py-2 mt-2 w-full', value: @user.graduation.try(:year) %> 
       </div>
     <% end %>
 
     <div class="flex justify-between">
-      <%= link_to 'Previous', contact_user_path(@user), class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= link_to 'Previous', contact_user_path(@user), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
       <%= form.submit "Next", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
     </div>
   <% end %>
