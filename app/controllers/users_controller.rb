@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    redirect_to public_send("#{@user.status}_user_path")
   end
 
   # GET /users/new

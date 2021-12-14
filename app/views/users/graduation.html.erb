@@ -1,14 +1,12 @@
-<div class="mx-auto md:w-2/3 w-full">
+<div class="mx-auto  w-full">
 
   <%= render 'progress', steps: 3, step_title: 'EDUCATION', current_step: 3 %>
 
   <%= form_with(model: @user, class: "contents", method: 'put', url: user_path) do |form| %>
-    <% if @user.errors.any? %>
+    <% if @user.errors.where('graduation.degree').any? %>
       <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
         <ul>
-          <% @user.errors.each do |error| %>
+          <% @user.errors.where('graduation.degree').each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
         </ul>
@@ -35,7 +33,10 @@
       </div>
       <div class='my-5'>
         <%= graduation_form.label :year, 'What year did you graduate?', class: 'text-lg required' %>
-        <%= graduation_form.number_field :year, class: 'block rounded-md bg-gray-200 outline-none px-3 py-2 mt-2 w-full', value: @user.graduation.try(:year) %> 
+        <%= graduation_form.number_field :year, 
+          class: "block rounded-md bg-gray-200 outline-none px-3 py-2 mt-2 w-full" + (@user.errors.where('graduation.year') ? ' field_with_errors' : ''),
+          value: @user.graduation.try(:year) %> 
+        <%= render 'form_errors', messages: @user.errors.messages_for('graduation.year') %>
       </div>
     <% end %>
 
