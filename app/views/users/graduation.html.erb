@@ -34,7 +34,7 @@
       <div class='my-5'>
         <%= graduation_form.label :year, 'What year did you graduate?', class: 'text-lg required' %>
         <%= graduation_form.number_field :year, 
-          class: "block rounded-md bg-gray-200 outline-none px-3 py-2 mt-2 w-full" + (@user.errors.where('graduation.year') ? ' field_with_errors' : ''),
+          class: "block rounded-md bg-gray-200 outline-none px-3 py-2 mt-2 w-full" + (@user.errors.where('graduation.year').any? ? ' field_with_errors' : ''),
           value: @user.graduation.try(:year) %> 
         <%= render 'form_errors', messages: @user.errors.messages_for('graduation.year') %>
       </div>
