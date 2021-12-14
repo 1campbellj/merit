@@ -18,7 +18,7 @@
     <%= form.text_field :status, value: 'complete', hidden: true %>
 
     <div class='text-lg'>
-      Highest level of education
+      Highest level of education*
     </div>
     <%= form.fields_for 'graduation_attributes' do |graduation_form| %>
       <% if @user.graduation %>
@@ -34,7 +34,7 @@
         <% end %>
       </div>
       <div class='my-5'>
-        <%= graduation_form.label :year, 'What year did you graduate?', class: 'text-lg', required: true %>
+        <%= graduation_form.label :year, 'What year did you graduate?', class: 'text-lg required' %>
         <%= graduation_form.number_field :year, class: 'block rounded-md bg-gray-200 outline-none px-3 py-2 mt-2 w-full', value: @user.graduation.try(:year) %> 
       </div>
     <% end %>

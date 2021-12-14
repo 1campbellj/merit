@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'welcome#index'
+  root 'users#new'
 
   resources :users do
     member do
@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       get :contact
       get :graduation
       get :complete
+      get :duplicate
     end
   end
 end

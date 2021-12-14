@@ -16,6 +16,8 @@ class User < ApplicationRecord
 
   # validate contact information only after it's entered in the contact state
   validates :first_name, :last_name, :email, :phone_number, presence: true, if: :contact_or_after?
+  validates :email, uniqueness: true, if: :contact_or_after?
+  validates :phone_number, uniqueness: true, if: :contact_or_after?
   validate :email_format, if: :contact_or_after?
   validate :phone_format, if: :contact_or_after?
 
@@ -44,6 +46,14 @@ class User < ApplicationRecord
     if phone_number.length != 10 || !phone_number.match(/\A\d+\z/)
       errors.add(:phone_number, 'must be 10 numbers and no other characters')
     end
+  end
+
+  def has_masters?
+    return graduation.degree.name == "Master's Degree"
+  end
+
+  def has_bachelors?
+    return graduation.degree.name == "Bachelor's Degree"
   end
 
 end

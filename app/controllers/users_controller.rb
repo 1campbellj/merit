@@ -45,13 +45,31 @@ class UsersController < ApplicationController
     @degrees = Degree.all
   end
 
+  def email_taken
+  end
+
+  def complete
+    if @user.has_masters?
+      render :masters
+    elsif @user.has_bachelors? && @user.graduation.year > Time.now.year - 5
+      render :invalid_bachelors
+    else
+      render :valid_application
+    end
+  end
+
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to next_step }
       else
-        format.html { render current_step, status: :unprocessable_entity }
+        duplicate = @user.errors.errors.select{|e| [:email, :phone_number].include?(e.attribute) && e.type == :taken }.present?
+        if duplicate
+          format.html { redirect_to duplicate_user_url }
+        else
+          format.html { render current_step, status: :unprocessable_entity }
+        end
       end
     end
   end
